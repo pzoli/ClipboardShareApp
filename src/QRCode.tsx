@@ -48,7 +48,7 @@ export default function QRCode() {
                             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                             body: `content=${encodeURIComponent(value)}`
                         };
-                        fetch(uri, requestOptions);
+                        fetch(uri, requestOptions).then((res) => res.text()).catch((err) => console.log('error: ' + err));
                     })
                 }
             }
