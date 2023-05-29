@@ -2,9 +2,10 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import * as React from 'react';
 
 import { View, StyleSheet, Text, Button } from 'react-native';
-import { useCameraDevices } from 'react-native-vision-camera';
+import { runOnJS } from 'react-native-reanimated';
+import { useCameraDevices, useFrameProcessor } from 'react-native-vision-camera';
 import { Camera } from 'react-native-vision-camera';
-import { useScanBarcodes, BarcodeFormat } from 'vision-camera-code-scanner';
+import { useScanBarcodes, BarcodeFormat, scanBarcodes } from 'vision-camera-code-scanner';
 
 export default function QRCode() {
     const [hasPermission, setHasPermission] = React.useState(false);
@@ -16,6 +17,13 @@ export default function QRCode() {
         checkInverted: true,
     });
 
+    /*
+    const frameProcessor = useFrameProcessor((frame) => {
+        'worklet';
+        const detectedBarcodes = scanBarcodes(frame, [BarcodeFormat.QR_CODE], { checkInverted: true });
+        runOnJS(setBarcodes)(detectedBarcodes);
+    }, []);
+    */
     React.useEffect(() => {
         (async () => {
             const status = await Camera.requestCameraPermission();
@@ -63,6 +71,7 @@ export default function QRCode() {
                         isActive={true}
                         frameProcessor={frameProcessor}
                         frameProcessorFps={5}
+
                     />
                     {
                         barcodes.map((barcode, idx) => (

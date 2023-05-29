@@ -15,7 +15,7 @@ Microservice address should generate with projects:
 ```
 git clone https://github.com/pzoli/ClipboardShareApp.git
 cd ClipboardShareApp
-npm install
+yarn install
 npx react-native start
 npx react-native run-android
 ```
